@@ -13,7 +13,8 @@ public class CategoryController {
         return "Getting all categories";
     }
     @GetMapping("/{categoryId}")
-    public String getProductsInCategories(@PathVariable("categoryId") Long categoryId){
+    public String getProductsInCategories(@PathVariable("categoryId") Long categoryId) throws Exception {
+        if(categoryId<1) throw new Exception("Invalid Category Id");
         return "Get products with category";
     }
 }

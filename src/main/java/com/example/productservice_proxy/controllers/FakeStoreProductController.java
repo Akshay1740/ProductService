@@ -1,8 +1,9 @@
 package com.example.productservice_proxy.controllers;
 
+import com.example.productservice_proxy.clients.fakestore.dto.FakeStoreProductDto;
 import com.example.productservice_proxy.models.Product;
+import com.example.productservice_proxy.services.FakeStoreProductService;
 import com.example.productservice_proxy.services.IProductService;
-import com.example.productservice_proxy.services.SelfProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
-    SelfProductService productService;
-    public ProductController(SelfProductService productService){
+@RequestMapping("fakestore/products")
+public class FakeStoreProductController {
+    FakeStoreProductService productService;
+    public FakeStoreProductController(FakeStoreProductService productService){
         this.productService = productService;
     }
     @GetMapping("/{productId}")
@@ -66,8 +67,8 @@ public class ProductController {
         Product product = this.productService.deleteProduct(productId);
         return product;
     }
-//    @ExceptionHandler({NullPointerException.class,IllegalArgumentException.class})
-//    public ResponseEntity<String> handleException(Exception e){
-//        return new ResponseEntity<>("kuch toh phat hai",HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler({NullPointerException.class,IllegalArgumentException.class})
+    public ResponseEntity<String> handleException(Exception e){
+        return new ResponseEntity<>("kuch toh phat hai",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
