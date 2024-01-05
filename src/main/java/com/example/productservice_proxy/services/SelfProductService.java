@@ -22,7 +22,7 @@ public class SelfProductService implements IProductService{
     }
     @Override
     public Product getSingleProduct(Long productId) {
-        return null;
+        return productRepo.getProductById(productId);
     }
 
     @Override

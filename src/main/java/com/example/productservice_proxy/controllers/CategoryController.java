@@ -1,20 +1,30 @@
 package com.example.productservice_proxy.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.productservice_proxy.models.Categories;
+import com.example.productservice_proxy.models.Product;
+import com.example.productservice_proxy.services.ICategoriesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products/categories")
 public class CategoryController {
-    @GetMapping()
-    public String getAllCategories(){
-        return "Getting all categories";
+    @Autowired
+    ICategoriesService iCategoriesService;
+
+    @GetMapping("")
+    public List<Categories> getAllCategories(){
+        return iCategoriesService.getAllCategories();
     }
     @GetMapping("/{categoryId}")
-    public String getProductsInCategories(@PathVariable("categoryId") Long categoryId) throws Exception {
+    public List<Product> getProductsInCategories(@PathVariable("categoryId") Long categoryId) throws Exception {
         if(categoryId<1) throw new Exception("Invalid Category Id");
-        return "Get products with category";
+        return iCategoriesService.getProductsByCategory(categoryId);
+    }
+    @PostMapping("")
+    public Categories addNewCategory(@RequestBody Categories categories){
+        return iCategoriesService.addNewCategory(categories);
     }
 }

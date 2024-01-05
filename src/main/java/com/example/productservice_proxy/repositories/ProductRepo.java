@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface ProductRepo extends JpaRepository<Product,Long> {
     Product save(Product product);
     Optional<Product> findById(Long productId);
+    Product getProductById(Long id);
 
     @Override
     void deleteById(Long productId);
